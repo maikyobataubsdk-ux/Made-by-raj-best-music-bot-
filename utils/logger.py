@@ -11,8 +11,8 @@ logging.basicConfig(
     ]
 )
 
-logging.getLogger("pyrogram").setLevel(logging.ERROR)
-logging.getLogger("pytgcalls").setLevel(logging.ERROR)
+logging.getLogger("pyrogram").setLevel(logging.INFO)
+logging.getLogger("ntgcalls").setLevel(logging.INFO)
 
 def get_logger(name):
     return logging.getLogger(name)
