@@ -8,26 +8,31 @@ from core.call import call_manager
 logger = get_logger("NexusBot")
 
 async def main():
-    run_checks()
+    try:
+        run_checks()
 
-    bot = Client(
-        "NexusMusicBot",
-        api_id=API_ID,
-        api_hash=API_HASH,
-        bot_token=BOT_TOKEN,
-        plugins=dict(root="handlers")
-    )
+        bot = Client(
+            "NexusMusicBot",
+            api_id=API_ID,
+            api_hash=API_HASH,
+            bot_token=BOT_TOKEN,
+            plugins=dict(root="handlers")
+        )
 
-    await bot.start()
-    logger.info("Main bot started.")
+        await bot.start()
 
-    # NTgCalls doesn't have a start() method like PyTgCalls
-    logger.info("NTgCalls ready.")
+        # Accessing 'me' to verify connection and log bot info
+        logger.info(f"Main bot started as @{bot.me.username} (ID: {bot.me.id})")
 
-    await idle()
+        # NTgCalls doesn't have a start() method like PyTgCalls
+        logger.info("NTgCalls ready.")
 
-    await bot.stop()
-    logger.info("Bot stopped.")
+        await idle()
+
+        await bot.stop()
+        logger.info("Bot stopped.")
+    except Exception as e:
+        logger.error(f"Error in main loop: {e}", exc_info=True)
 
 if __name__ == "__main__":
     asyncio.run(main())
